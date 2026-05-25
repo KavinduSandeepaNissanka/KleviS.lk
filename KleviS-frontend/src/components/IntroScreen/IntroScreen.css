@@ -1,0 +1,297 @@
+/* Intro Screen Wrapper */
+.intro-scene-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: #050505; /* Deep luxury black */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease-in-out;
+  pointer-events: all; /* Block clicks while intro is running */
+}
+
+/* Smooth fade out when animation finishes */
+.intro-scene-wrapper.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 3D Camera Container */
+.intro-camera {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /* Setup 3D space */
+  perspective: 2000px;
+  transform-style: preserve-3d;
+  /* Initial slight zoom out for dramatic effect */
+  transform: scale(1);
+  transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1); /* Slow cinematic zoom */
+}
+
+/* Zoom effect when doors open */
+.intro-camera.zoom-in {
+  transform: scale(1.15) translateZ(100px);
+}
+
+/* Background Interior */
+.store-interior {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.interior-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(8px) brightness(0.6);
+  transform: scale(1.1); /* Prevent blurred edges from showing */
+}
+
+.interior-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+}
+
+/* Storefront Facade (Wall frame) */
+.store-facade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Thick black borders act as the physical walls around the doors */
+  border-top: 15vh solid #111;
+  border-bottom: 5vh solid #111;
+  border-left: 10vw solid #111;
+  border-right: 10vw solid #111;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
+  pointer-events: none;
+}
+
+/* Signboard above the doors */
+.store-signboard {
+  position: absolute;
+  top: -12vh; /* Positioned on the top frame */
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.signboard-text {
+  color: #ffffff;
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 4rem;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  margin: 0;
+  /* Glowing text effect */
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 4px 10px rgba(0, 0, 0, 0.8);
+  animation: signboard-glow 3s infinite alternate;
+}
+
+@keyframes signboard-glow {
+  0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 0, 0, 0.8); }
+  100% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 4px 10px rgba(0, 0, 0, 0.8); }
+}
+
+/* Double Glass Doors Container */
+.doors-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+/* Individual Glass Doors */
+.glass-door {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  
+  /* Highly realistic glassmorphism */
+  background: rgba(15, 15, 15, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  
+  /* Metal framing around the glass */
+  border-top: 15px solid #1a1a1a;
+  border-bottom: 25px solid #1a1a1a;
+  
+  transform-style: preserve-3d;
+  
+  /* Cinematic timing function for heavy doors */
+  transition: transform 2.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Give the doors 3D physical thickness using pseudo elements */
+.glass-door::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  bottom: -25px;
+  width: 20px; /* Door thickness */
+  background: #111;
+  transform: rotateY(90deg);
+}
+
+.left-door {
+  transform-origin: left center;
+  border-left: 20px solid #1a1a1a;
+  border-right: 10px solid #222; /* Center meeting edge */
+}
+
+/* The right edge of the left door */
+.left-door::after {
+  right: -10px;
+  transform-origin: right center;
+}
+
+.right-door {
+  transform-origin: right center;
+  border-right: 20px solid #1a1a1a;
+  border-left: 10px solid #222; /* Center meeting edge */
+}
+
+/* The left edge of the right door */
+.right-door::after {
+  left: -10px;
+  transform-origin: left center;
+}
+
+/* 3D Swing Open Animation with realistic angle */
+.left-door.open {
+  transform: rotateY(95deg); /* Positive opens inward */
+}
+
+.right-door.open {
+  transform: rotateY(-95deg); /* Negative opens inward */
+}
+
+/* Door Handles - More realistic 3D shape */
+.door-handle {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 350px;
+  background: linear-gradient(to right, #444, #999, #444);
+  border-radius: 6px;
+  transform: translateY(-50%) translateZ(15px); /* Pops out in 3D space */
+  box-shadow: -5px 10px 15px rgba(0,0,0,0.8);
+}
+
+.door-handle::before, .door-handle::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #333;
+  left: -4px;
+  border-radius: 50%;
+  transform: translateZ(-10px);
+}
+
+.door-handle::before { top: 20px; }
+.door-handle::after { bottom: 20px; }
+
+.left-handle {
+  right: 30px;
+}
+
+.right-handle {
+  left: 30px;
+}
+
+/* Realistic Glass Reflection sweeping across the doors */
+.glass-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0) 30%, 
+    rgba(255,255,255,0.1) 45%, 
+    rgba(255,255,255,0.2) 50%, 
+    rgba(255,255,255,0) 55%, 
+    rgba(255,255,255,0) 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Subtle Music Toggle Button */
+.ambient-music-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.ambient-music-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Fade in for UI elements */
+.fade-in-delayed {
+  animation: fadeInDelay 2s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInDelay {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .store-facade {
+    border-top: 10vh solid #111;
+    border-left: 5vw solid #111;
+    border-right: 5vw solid #111;
+  }
+  
+  .store-signboard {
+    top: -8vh;
+  }
+
+  .signboard-text {
+    font-size: 2.2rem;
+    letter-spacing: 6px;
+  }
+}

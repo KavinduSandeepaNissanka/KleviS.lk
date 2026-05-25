@@ -1,0 +1,40 @@
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend
+KleviS-frontend/node_modules/
+KleviS-frontend/dist/
+KleviS-frontend/dist-ssr/
+KleviS-frontend/.vite/
+KleviS-frontend/*.local
+
+# Backend (Maven/Java)
+KleviS-backend/target/
+KleviS-backend/*.jar
+KleviS-backend/*.war
+KleviS-backend/*.nar
+KleviS-backend/*.ear
+KleviS-backend/*.zip
+KleviS-backend/*.tar.gz
+KleviS-backend/*.rar
+KleviS-backend/.mtj.tmp/
+KleviS-backend/hs_err_pid*
+KleviS-backend/replay_pid*
+KleviS-backend/.classpath
+KleviS-backend/.project
+KleviS-backend/.settings/
+
+# Editor and general OS files
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
